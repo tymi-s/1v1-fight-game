@@ -1,5 +1,6 @@
 from abc import ABC,abstractmethod
 from character import *
+from use_spell import *
 from archer import *
 from mage import *
 from archer_turn import *
@@ -25,9 +26,10 @@ while True:
 
     if whose_turn == "mage":
         mage_turn()
+        use_spell("mage")
     else:
         archer_turn()
-
+        use_spell("archer")
     x= MAGE.check_if_alive()
     y = ARCHER.check_if_alive()
 
