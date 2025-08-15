@@ -1,10 +1,10 @@
 from character import Character
-
+from main import *
 
 class Mage(Character):
 
-    def __init__(self, hp=100, dmg=15, name="MAGE", distance=50, mana=50):
-        Character.__init__(self,hp,dmg,name,distance)
+    def __init__(self, hp=100, dmg=15, name="MAGE", mana=50):
+        Character.__init__(self,hp,dmg,name,)
         self.mana = mana
 
     def __str__(self):
@@ -12,17 +12,17 @@ class Mage(Character):
 
     def spell1(self):
         if self.mana >=10:
-            self.distance+=7
+            distance +=7
             return 1
         else:
             return 0
 
 
     def spell2(self):
-        if self.distance >=55:
-            return 1 #deals more dmg
+        if distance >=55:
+            return 25 #deals more dmg
         else:
-            return 0 #deals basic dmg
+            return 15 #deals basic dmg
 
 
     def get_dmg(self,damage):

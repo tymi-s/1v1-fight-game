@@ -6,7 +6,7 @@ from mage import *
 from archer_turn import *
 from mage_turn import *
 # in each round character
-
+distance=50
 #ARCHER = Archer()
 MAGE = Mage()
 print(MAGE)

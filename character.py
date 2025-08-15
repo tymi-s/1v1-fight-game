@@ -2,11 +2,11 @@ from abc import ABC,abstractmethod
 class Character(ABC):
 
 
-    def __init__(self,hp=100,dmg=15,name="None",distance=50):
+    def __init__(self,hp=100,dmg=15,name="None"):
         self.hp=hp
         self.dmg=dmg
         self.name = name
-        self.distance = distance
+
 
 
 
