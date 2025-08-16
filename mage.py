@@ -1,5 +1,5 @@
 from character import Character
-from main import *
+import main
 
 class Mage(Character):
 
@@ -12,14 +12,14 @@ class Mage(Character):
 
     def spell1(self):
         if self.mana >=10:
-            distance +=7
+            main.distance +=7
             return 1
         else:
             return 0
 
 
     def spell2(self):
-        if distance >=55:
+        if main.distance >=55:
             return 25 #deals more dmg
         else:
             return 15 #deals basic dmg

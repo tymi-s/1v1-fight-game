@@ -1,5 +1,4 @@
 from character import Character
-from main import distance
 class Archer(Character):
 
     def __init__(self,hp=100,dmg=15,name="ARCHER",stamina=50):
@@ -10,15 +9,15 @@ class Archer(Character):
     def __str__(self):
         return Character.__str__(self)+ f" stamina: {self.stamina}"
 
-    def spell1(self):
+    def spell1(self,distance):
         if self.stamina >= 10:
-            distance -= 7
+            main.distance -= 7
             return 1
         else:
             return 0
 
-    def spell2(self):
-        if distance <= 55:
+    def spell2(self,distance):
+        if main.distance <= 55:
             return 15  # deals more dmg
         else:
             return 25  # deals basic dmg

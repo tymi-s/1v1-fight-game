@@ -1,5 +1,6 @@
 from mage_turn import *
-from main import *
+from mage import *
+from archer import *
 
 def use_spell(character):
 
