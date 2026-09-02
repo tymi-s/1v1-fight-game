@@ -239,7 +239,7 @@ story.append(PageBreak())
 day_page(
     "DZIEŃ 4 / CZWARTEK",
     "GÓRA B — Hipertrofia + CLUSTER",
-    "Objętość dla wzrostu mięśni + cluster podciąganie jako bodziec siłowy (Twój priorytet).",
+    "Objętość dla wzrostu mięśni + cluster podciąganie jako bodziec siłowy.",
     [
         ["1", "PODCIĄGANIE Z OBCIĄŻENIEM — CLUSTER", "3 klastry × 5×1", "~80% dodatku (+16 kg)", "20–30 s / 3 min"],
         ["2", "Wyciskanie hantli na skosie", "4 × 8–10", "RPE 8", "2 min"],
@@ -308,7 +308,7 @@ story.append(bullets([
 story.append(Paragraph("Które ćwiczenia nadają się na cluster", H2))
 story.append(Paragraph("Cluster najlepiej działa na ćwiczeniach WIELOSTAWOWYCH (dużo mięśni naraz), z łatwym resetem między powtórzeniami. Na izolacjach nie ma sensu.", BODY))
 story.append(make_table(["Ćwiczenie", "Cluster?", "Dlaczego"], [
-    ["Podciąganie z obciążeniem", "TAK — stały element", "Twój priorytet, łatwy reset, wysoka intensywność"],
+    ["Podciąganie z obciążeniem", "TAK — stały element", "Łatwy reset, wysoka intensywność"],
     ["Wyciskanie leżąc", "TAK (opcjonalnie)", "Wielostawowe, łatwy reset na stojakach"],
     ["OHP / żołnierskie", "TAK (opcjonalnie)", "Wielostawowe, cluster utrzymuje jakość"],
     ["Dipy z obciążeniem", "TAK (opcjonalnie)", "Krótki ROM, łatwa pauza"],
