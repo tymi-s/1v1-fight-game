@@ -101,6 +101,13 @@ def day_page(day, last=False):
         story.append(make_table(EX_HEADERS, rows, EX_W))
         if day.get("note"):
             story.append(Paragraph(day["note"], NOTE))
+    elif day.get("sections"):
+        for head, items in day["sections"]:
+            story.append(Paragraph(head, H2))
+            story.append(make_table(["Element", "Wykonanie"], [list(r) for r in items],
+                                    [7.5 * cm, 10.0 * cm], left_col=0))
+        if day.get("note"):
+            story.append(Paragraph(day["note"], NOTE))
     else:
         story.append(make_table(["Element", "Wykonanie"],
                                 [["Plan", day["info"]]],
@@ -115,7 +122,7 @@ story.append(Paragraph("PLAN TRENINGOWY", H_TITLE))
 story.append(Spacer(1, 0.3 * cm))
 story.append(Paragraph("Hipertrofia: pośladki &amp; plecy &bull; Redukcja tłuszczu", H_SUB))
 story.append(Spacer(1, 0.2 * cm))
-story.append(Paragraph("5 dni ruchu (4 siłownia + cardio) &bull; minimalny akcent na uda", H_SUB2))
+story.append(Paragraph("5 dni ruchu: 2× dół + 2× góra + cardio &bull; minimalny akcent na uda", H_SUB2))
 story.append(Spacer(1, 0.9 * cm))
 
 story.append(Paragraph("Cele i założenia", H2))
@@ -141,15 +148,22 @@ story.append(bullets([
 
 story.append(Paragraph("Pośladki i plecy TAK, uda (przód) minimalnie", H2))
 story.append(bullets([
-    "Trening decyduje, KTÓRE mięśnie rosną. Dlatego stawiamy na ruchy biodro-dominujące (hip thrust, RDL, odwodzenie, back extension, kickback), które budują pośladek bez mocnego angażowania przodu uda.",
-    "Świadomie usunięte: prostowanie nóg (czwórki) i ciężki leg press — najmocniej rozbudowują czworogłowe (przód uda).",
-    "Step up i RDL z wychyleniem do przodu i naciskiem na piętę = akcent na pośladek, nie na udo.",
-    "Plecy budujemy częstotliwością i różnymi kątami ciągnięcia (ściąganie, wiosłowania, face pull).",
+    "Trening decyduje, KTÓRE mięśnie rosną. Dlatego stawiamy na ruchy biodro-dominujące (hip thrust, glute bridge, RDL, ławka rzymska, kickback), które budują pośladek bez mocnego angażowania przodu uda.",
+    "Bez prostowania nóg i ciężkiego leg press — najmocniej rozbudowują czworogłowe (przód uda).",
+    "Bułgarski, step up i RDL z wychyleniem do przodu i naciskiem na piętę = akcent na pośladek, nie na udo.",
+    "Plecy budujemy częstotliwością i różnymi kątami ciągnięcia (ściąganie, podciąganie, wiosłowanie, face pull).",
 ]))
 
-story.append(Paragraph("Twoje ulubione ćwiczenia zostają", H2))
+story.append(Paragraph("Budowa dnia dołu", H2))
+story.append(make_table(["Funkcja", "Dół A (pon.)", "Dół B (czw.)"],
+                        [list(r) for r in P.LOWER_STRUCTURE],
+                        [5.5 * cm, 6.0 * cm, 6.0 * cm], left_col=0))
+
+story.append(Paragraph("„Kwadratowe” pośladki", H2))
 story.append(bullets([
-    "Biceps hantlami, triceps na lince, face pull na lince, hip thrust na maszynie, odwodzenie na maszynie, step up na lince — wszystkie są w planie.",
+    "Kształt pośladków w dużej mierze zależy od budowy miednicy i rozmieszczenia tłuszczu — trening go poprawia, ale nie zmieni całkowicie.",
+    "Pośladek średni/mały: tylko 2 lekkie serie na dzień dołu. Abduktor w pochyleniu do przodu = więcej górnej części pośladka wielkiego.",
+    "Główna objętość idzie w pośladek wielki (hip thrust, glute bridge, RDL, sumo) — to on daje okrągły kształt.",
 ]))
 story.append(PageBreak())
 
@@ -167,7 +181,7 @@ story.append(bullets([
     "Hip thrust z samą masą / lekko — 15 powt. (rozgrzewkowo).",
 ]))
 
-story.append(Paragraph("3. Aktywacja przed dniem GÓRY (wt./sob.)", H2))
+story.append(Paragraph("3. Aktywacja przed dniem GÓRY (śr./sob.)", H2))
 story.append(bullets([
     "Band pull-apart (guma) — 15 powt.",
     "Krążenia ramion — 10 w każdą stronę.",
@@ -205,8 +219,9 @@ story.append(Paragraph("Masę ciała podaj, aby dokładnie policzyć białko —
 
 story.append(Paragraph("Dlaczego ten plan pasuje do celów", H2))
 story.append(bullets([
-    "Pośladki 2×/tydzień z pełną objętością (hip thrust, odwodzenie, RDL, back extension) = szybszy wzrost.",
-    "Plecy 2–3×/tydzień z różnych kątów = grubość i szerokość bez przerostu ud.",
+    "Pośladki 2×/tydzień, każdy trening w rozciągnięciu, skróceniu, jednonóż i w izolacji = szybszy wzrost.",
+    "Plecy 2×/tydzień z różnych kątów (pion + poziom) = grubość i szerokość bez przerostu ud.",
+    "Otwarcie bioder raz w tygodniu = lepszy zakres ruchu w przysiadach i hip thruście.",
     "Bez prostowania nóg i ciężkiego leg press = uda (przód) rosną minimalnie.",
     "Cardio + deficyt + białko = redukcja tłuszczu z całego ciała (w tym brzuch i dolne plecy).",
     "Zakresy 8–15 powt. i RPE 8 = klasyczna hipertrofia bez zbędnego zajeżdżania.",
