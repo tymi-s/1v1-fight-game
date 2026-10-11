@@ -304,13 +304,13 @@ def build_instrukcja(wb):
     ws.sheet_view.showGridLines = False
 
 
-def build_progres(wb):
+def build_progres(wb, color=NAVY):
     ws = wb.create_sheet(title="Progres (rekordy)")
     headers = ["Data", "Ćwiczenie", "Ciężar [kg]", "Powt.", "Szac. 1RM", "Notatki"]
     widths = [12, 32, 12, 8, 11, 28]
     for i, (h, wd) in enumerate(zip(headers, widths), start=1):
         ws.column_dimensions[get_column_letter(i)].width = wd
-        style(ws.cell(row=1, column=i, value=h), F_HDR, NAVY, CENTER)
+        style(ws.cell(row=1, column=i, value=h), F_HDR, color, CENTER)
     for r in range(2, 62):
         for c in range(1, 7):
             cell = ws.cell(row=r, column=c)
@@ -325,12 +325,13 @@ def build_progres(wb):
     ws.freeze_panes = "A2"
 
 
-wb = Workbook()
-wb.remove(wb.active)
-build_instrukcja(wb)
-for code in ("GA", "DA", "GB", "DB"):
-    build_workout_sheet(wb, code)
-build_kardio_sheet(wb)
-build_progres(wb)
-wb.save(OUTPUT)
-print(f"Zapisano: {OUTPUT}")
+if __name__ == "__main__":
+    wb = Workbook()
+    wb.remove(wb.active)
+    build_instrukcja(wb)
+    for code in ("GA", "DA", "GB", "DB"):
+        build_workout_sheet(wb, code)
+    build_kardio_sheet(wb)
+    build_progres(wb)
+    wb.save(OUTPUT)
+    print(f"Zapisano: {OUTPUT}")
