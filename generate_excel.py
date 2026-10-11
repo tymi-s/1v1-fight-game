@@ -1,11 +1,12 @@
-"""Generator arkusza treningowego (Excel .xlsx) na wrzesień i październik 2026.
+"""Generator arkusza treningowego (Excel .xlsx) — wrzesień–listopad 2026.
 
 Układ poziomy: jeden arkusz na trening (Góra A, Dół A, Góra B, Dół B, Kardio).
-Wiersze = ćwiczenia i serie (stała, krótka lista), kolumny = kolejne daty
-treningów (po 2 kolumny: powtórzenia i ciężar). Przewija się tylko w prawo.
+Wiersze = ćwiczenia i serie (stała, krótka lista), kolumny = daty treningów
+(po 2 kolumny: powtórzenia i ciężar). Przewija się tylko w prawo.
 
-Pola do wpisywania mają format tekstowy, żeby np. 12.5 nie zamieniało się w datę.
-Wyniki wpisane wcześniej (trening_log.py) są przeniesione do odpowiednich dat.
+Kolumny dat = dni z wpisanymi wynikami (trening_log.py) + puste, zaplanowane
+treningi od PLAN_FROM do PLAN_TO. Pola do wpisywania mają format tekstowy,
+żeby np. 12.5 nie zamieniało się w datę.
 """
 
 import datetime
@@ -15,10 +16,9 @@ from openpyxl.utils import get_column_letter
 
 from trening_log import LOG
 
-START = datetime.date(2026, 9, 1)
-END = datetime.date(2026, 10, 31)
-# Góra A: do 14.09 w poniedziałki, od 20.09 w niedziele (poniedziałek = odpoczynek).
-GA_SUNDAY_FROM = datetime.date(2026, 9, 20)
+PLAN_FROM = datetime.date(2026, 10, 11)
+PLAN_TO = datetime.date(2026, 11, 30)
+OUTPUT = "Trening_wrzesien_listopad_2026.xlsx"
 
 TEXT = "@"
 
@@ -107,20 +107,18 @@ WORKOUTS = {
 KARDIO_PLAN = {2: "Bieg 8–10 km, Z2", 5: "Małe kardio: 8 km biegu"}
 
 
-def workout_for(date):
-    wd = date.weekday()
-    if wd == 0:
-        return "GA" if date < GA_SUNDAY_FROM else None
-    if wd == 6:
-        return "GA" if date >= GA_SUNDAY_FROM else None
-    return {1: "DA", 2: "KARDIO", 3: "GB", 4: "DB", 5: "KARDIO"}[wd]
+WEEK = {6: "GA", 0: None, 1: "DA", 2: "KARDIO", 3: "GB", 4: "DB", 5: "KARDIO"}
 
 
-def all_dates():
-    d = START
-    while d <= END:
-        yield d
+def dates_for(code):
+    logged = {d for (c, d) in LOG if c == code}
+    planned = set()
+    d = PLAN_FROM
+    while d <= PLAN_TO:
+        if WEEK[d.weekday()] == code:
+            planned.add(d)
         d += datetime.timedelta(days=1)
+    return sorted(logged | planned)
 
 
 def date_label(d):
@@ -150,7 +148,7 @@ def build_workout_sheet(wb, code):
     w = WORKOUTS[code]
     ws = wb.create_sheet(title=w["sheet"])
     fit_to_page(ws)
-    dates = [d for d in all_dates() if workout_for(d) == code]
+    dates = dates_for(code)
 
     ws.column_dimensions["A"].width = 30
     ws.column_dimensions["B"].width = 6
@@ -238,7 +236,7 @@ def build_workout_sheet(wb, code):
 def build_kardio_sheet(wb):
     ws = wb.create_sheet(title="Kardio (śr, sob)")
     fit_to_page(ws)
-    dates = [d for d in all_dates() if workout_for(d) == "KARDIO"]
+    dates = dates_for("KARDIO")
     labels = ["Plan", "Dystans [km]", "Czas", "Tempo [min/km]", "Notatki"]
 
     ws.column_dimensions["A"].width = 18
@@ -264,7 +262,7 @@ def build_instrukcja(wb):
     ws.column_dimensions["A"].width = 16
     ws.column_dimensions["B"].width = 70
     rows = [
-        ("PLAN TRENINGOWY — arkusz do śledzenia progresu (wrzesień–październik 2026)", None, True, NAVY),
+        ("PLAN TRENINGOWY — arkusz do śledzenia progresu (wrzesień–listopad 2026)", None, True, NAVY),
         ("", None, False, None),
         ("Jak korzystać", None, True, NAVY),
         ("1.", "Każdy trening ma swoją zakładkę (Góra A, Dół A, Góra B, Dół B, Kardio).", False, None),
@@ -334,5 +332,5 @@ for code in ("GA", "DA", "GB", "DB"):
     build_workout_sheet(wb, code)
 build_kardio_sheet(wb)
 build_progres(wb)
-wb.save("Trening_wrzesien_pazdziernik_2026.xlsx")
-print("Zapisano: Trening_wrzesien_pazdziernik_2026.xlsx")
+wb.save(OUTPUT)
+print(f"Zapisano: {OUTPUT}")
